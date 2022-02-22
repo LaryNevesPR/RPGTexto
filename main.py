@@ -1,3 +1,6 @@
+import email
+from turtle import color, title
+from unicodedata import name
 import discord
 import json
 import os
@@ -7,40 +10,56 @@ import asyncio
 from discord.ext import commands, tasks
 
 os.chdir("D:\Py\RpgTexto\RPGTexto\Recursos")
-client = commands.Bot(command_prefix="!!",  case_insensitive=True)
+client = discord.Bot(command_prefix="!!",  case_insensitive=True)
+
+testingservers = [556910930395529237,824754982104465458]
 
 @client.event
 async def on_ready():
     print('Opa! To On!')
 
-@client.command()
-async def Perfil(ctx):
+@client.slash_command(guild_ids = testingservers, name = "perfil", description = "Visualizar o Perfil")
+async def perfil(ctx):
+    await CriarConta(ctx)
+    Users = await Ler_Users()
 
-    await CriarConta(ctx.author)
+    perfilDinehiro = Users[str(ctx.author.id)]["dinheiro"]
+    hpmax = Users[str(ctx.author.id)]["hpMax"]
+    hpatual = Users[str(ctx.author.id)]["hpAtual"]
+
+    avatar = ctx.author.avatar
     
-
+    embed = discord.Embed(title = f"{ctx.author.name}", description = "Seu perfil", color = discord.Color.dark_green())
+    
+    embed.set_author(name = "Perfil", icon_url="https://truth.bahamut.com.tw/s01/202107/e32881d802fb00c6ffbc857148fd8a0b.JPG")
+    embed.set_thumbnail(url=avatar)
+    embed.add_field(name="Nome:", value= f"{ctx.author}", inline= False)
+    embed.add_field(name="Hp:", value= f"{hpatual}/{hpmax}", inline= False)
+    embed.add_field(name="Dinheiro:", value= f"${perfilDinehiro}", inline= False)
+    
+    await ctx.respond(embed=embed)
 
 
 async def Guardar_Users(Users):
     with open('UsersData.json', 'w', encoding='utf-8') as f:
         json.dump(Users, f, indent= 2,  ensure_ascii= False)
 
+
 async def Ler_Users():
     if os.path.exists('UsersData.json'):
         with open('UsersData.json', 'r', encoding='utf-8') as f:
-            Users= json.load(f)
-    return Users
+            users= json.load(f)
+    return users
 
 
-async def CriarConta(autor):
+async def CriarConta(ctx):
     Users = await Ler_Users()
-    if str(autor.author.id) in Users:
+    if str(ctx.author.id) in Users:
         print("Ja está na cadastrado")
-        await autor.send("Ja está cadastrado")
         return
     
-    await Criar_Conta(autor.author)
-    await autor.send("Você foi cadastrado com sucesso")
+    await Criar_Conta(ctx.author)
+    await ctx.respond("Você foi cadastrado com sucesso")
 
 async def Criar_Conta(autor):
     Users= await Ler_Users()
@@ -50,9 +69,12 @@ async def Criar_Conta(autor):
             "id": autor.id,
             "nome": autor.name,
             "dinheiro": 0,
+            "hpMax": 100,
+            "hpAtual": 100,
+            "danoBase": 10,
             "inventario": {}
             }
-        Guardar_Users(Users)
+        await Guardar_Users(Users)
         return True
     else:
         return False

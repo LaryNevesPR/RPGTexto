@@ -1,0 +1,11 @@
+{
+  "238459676876996619": {
+    "id": 238459676876996619,
+    "nome": "Larry a Lagosta",
+    "dinheiro": 0,
+    "hpMax": 100,
+    "hpAtual": 100,
+    "danoBase": 10,
+    "inventario": {}
+  }
+}
