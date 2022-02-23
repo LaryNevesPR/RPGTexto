@@ -5,6 +5,9 @@
     "dinheiro": 0,
     "hpMax": 100,
     "hpAtual": 100,
+    "manaMax": 50,
+    "manaAtual": 50,
+    "defesaBase": 2,
     "danoBase": 10,
     "inventario": {}
   }
