@@ -1,16 +1,19 @@
-import email
-from turtle import color, title
-from unicodedata import name
 import discord
 import json
 import os
 import random
 import asyncio
 
+from discord.ui import Button
 from discord.ext import commands, tasks
+from numpy import true_divide
 
 os.chdir("D:\Py\RpgTexto\RPGTexto\Recursos")
 client = discord.Bot(command_prefix="!!",  case_insensitive=True)
+
+for filename in os.listdir("D:\Py\RpgTexto\RPGTexto\Cogs"):
+    if filename.endswith(".py"):
+        client.load_extension(f"Cogs.{filename[:-3]}")
 
 testingservers = [556910930395529237,824754982104465458]
 
@@ -26,6 +29,8 @@ async def perfil(ctx):
     perfilDinehiro = Users[str(ctx.author.id)]["dinheiro"]
     hpmax = Users[str(ctx.author.id)]["hpMax"]
     hpatual = Users[str(ctx.author.id)]["hpAtual"]
+    manamax = Users[str(ctx.author.id)]["manaMax"]
+    manaatual = Users[str(ctx.author.id)]["manaAtual"]
 
     avatar = ctx.author.avatar
     
@@ -34,10 +39,12 @@ async def perfil(ctx):
     embed.set_author(name = "Perfil", icon_url="https://truth.bahamut.com.tw/s01/202107/e32881d802fb00c6ffbc857148fd8a0b.JPG")
     embed.set_thumbnail(url=avatar)
     embed.add_field(name="Nome:", value= f"{ctx.author}", inline= False)
-    embed.add_field(name="Hp:", value= f"{hpatual}/{hpmax}", inline= False)
+    embed.add_field(name="Hp:", value= f"{hpatual}/{hpmax}", inline= True)
+    embed.add_field(name="Mana:", value= f"{manaatual}/{manamax}", inline= True)
     embed.add_field(name="Dinheiro:", value= f"${perfilDinehiro}", inline= False)
     
     await ctx.respond(embed=embed)
+
 
 
 async def Guardar_Users(Users):
@@ -71,6 +78,9 @@ async def Criar_Conta(autor):
             "dinheiro": 0,
             "hpMax": 100,
             "hpAtual": 100,
+            "manaMax": 50,
+            "manaAtual": 50,
+            "defesaBase": 2,
             "danoBase": 10,
             "inventario": {}
             }
