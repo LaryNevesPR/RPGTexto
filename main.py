@@ -15,7 +15,7 @@ for filename in os.listdir("D:\Py\RpgTexto\RPGTexto\Cogs"):
     if filename.endswith(".py"):
         client.load_extension(f"Cogs.{filename[:-3]}")
 
-testingservers = [556910930395529237,824754982104465458]
+testingservers = [556910930395529237,824754982104465458,817213798841843783]
 
 @client.event
 async def on_ready():
@@ -57,7 +57,6 @@ async def Ler_Users():
         with open('UsersData.json', 'r', encoding='utf-8') as f:
             users= json.load(f)
     return users
-
 
 async def CriarConta(ctx):
     Users = await Ler_Users()

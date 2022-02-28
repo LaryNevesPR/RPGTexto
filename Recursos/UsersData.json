@@ -7,6 +7,7 @@
     "hpAtual": 100,
     "manaMax": 50,
     "manaAtual": 50,
+    "veloAtk": 0.2,
     "defesaBase": 2,
     "danoBase": 10,
     "inventario": {}

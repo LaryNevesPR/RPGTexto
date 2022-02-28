@@ -1,0 +1,33 @@
+{
+    "morcego":{
+        "level": 1,
+        "nome": "Morcego",
+        "hp": 12,
+        "veloAtk": 0.5,
+        "danoBase": 10
+    },"porco":{
+        "level": 1,
+        "nome": "Porco",
+        "hp": 15,
+        "veloAtk": 0.2,
+        "danoBase": 10
+    },"largato":{
+        "level": 1,
+        "nome": "Largato",
+        "hp": 12,
+        "veloAtk": 0.2,
+        "danoBase": 10
+    },"bebe":{
+        "level": 1,
+        "nome": "Bebê",
+        "hp": 5,
+        "veloAtk": 0.3,
+        "danoBase": 1
+    },"coluna de pedra":{
+        "level": 1,
+        "nome": "Coluna de Pedra",
+        "hp": 50,
+        "veloAtk": 0.001,
+        "danoBase": 1
+    }
+}
